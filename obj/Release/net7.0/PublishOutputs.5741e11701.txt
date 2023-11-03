@@ -1,7 +1,6 @@
 D:\GitHub\Warehouse\obj\Release\net7.0\PubTmp\Out\Warehouse.exe
 D:\GitHub\Warehouse\obj\Release\net7.0\PubTmp\Out\appsettings.Development.json
 D:\GitHub\Warehouse\obj\Release\net7.0\PubTmp\Out\appsettings.json
-D:\GitHub\Warehouse\obj\Release\net7.0\PubTmp\Out\Frontend\warehouse-pwa\build\manifest.json
 D:\GitHub\Warehouse\obj\Release\net7.0\PubTmp\Out\Frontend\warehouse-pwa\package-lock.json
 D:\GitHub\Warehouse\obj\Release\net7.0\PubTmp\Out\Frontend\warehouse-pwa\package.json
 D:\GitHub\Warehouse\obj\Release\net7.0\PubTmp\Out\Frontend\warehouse-pwa\public\manifest.json

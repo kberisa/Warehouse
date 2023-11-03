@@ -79,4 +79,3 @@ D:\GitHub\Warehouse\bin\Release\net7.0\Microsoft.Extensions.DependencyModel.dll
 D:\GitHub\Warehouse\bin\Release\net7.0\Mono.TextTemplating.dll
 D:\GitHub\Warehouse\bin\Release\net7.0\System.CodeDom.dll
 D:\GitHub\Warehouse\bin\Release\net7.0\BCrypt.Net.dll
-D:\GitHub\Warehouse\bin\Release\net7.0\Frontend\warehouse-pwa\build\manifest.json

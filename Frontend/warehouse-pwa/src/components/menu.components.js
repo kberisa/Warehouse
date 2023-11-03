@@ -7,11 +7,9 @@ import { Link } from 'react-router-dom';
 
 import logo from '../logo.svg';
 
-export default class Menu extends Component {
+export default class Menu extends React.Component {
   render() {
-    // Note: You can uncomment and use 'token' and 'authorized' if needed.
-    // const token = localStorage.getItem('Bearer');
-    // const authorized = token !== null && token !== '';
+
 
     return (
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -20,12 +18,12 @@ export default class Menu extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" /> 
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <NavDropdown title="Our Place" id="basic-nav-dropdown" style={{ margin: '0 20px' }}>
+              <NavDropdown title="Our Places" id="basic-nav-dropdown" style={{ margin: '0 20px' }}>
                 <NavDropdown.Item as={Link} to="/warehouse">
-                  Warehouse
+                  Warehouse 1
                 </NavDropdown.Item>                                                 
               </NavDropdown>
-              <Nav.Link target="_blank" href="/swagger/index.html">API documentation</Nav.Link>
+              <Nav.Link target="_blank" href="/swagger/index.html">Swagger</Nav.Link>
             </Nav>   
           </Navbar.Collapse> 
         </Container>

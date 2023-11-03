@@ -1,103 +1,113 @@
-import React, { useState } from "react";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-const AddWarehouseItem = () => {
-  const navigate = useNavigate();
+export default class AddWarehouseItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      formData: {
+        name: "",
+        quantity: 0,
+        entryTime: "",
+        available: true,
+      },
+    };
+  }
 
-  const [formData, setFormData] = useState({
-    name: "",
-    quantity: 0,
-    entryTime: "",
-    available: true,
-  });
-
-  const handleInputChange = (e) => {
+  handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? checked : value;
+    const newValue = type === "checkbox" ? checked : value;
 
-    setFormData({
-      ...formData,
-      [name]: newValue,
-    });
+    this.setState((prevState) => ({
+      formData: {
+        ...prevState.formData,
+        [name]: newValue,
+      },
+    }));
   };
 
-  const handleSubmit = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
-    // Send the form data to your backend for item creation
+    const { name, quantity, entryTime, available } = this.state.formData;
+    // Construct the item object with form data
+
     const newItem = {
-      name: formData.name,
-      quantity: formData.quantity,
-      entryTime: formData.entryTime,
-      available: formData.available,
+      name,
+      quantity,
+      entryTime,
+      available,
     };
 
-    // Call a function to submit the new item data to your API
-    fetch("/api/Warehouse", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newItem),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // After successfully adding the item, navigate back to the WarehouseList page
-        navigate("/warehouse");
-      })
-      .catch((error) => console.error("Error adding item: ", error));
+    // Implement the logic to send the new item data to your backend
+    // You can use a service function for this or an API call.
+
+    // Example: Replace the following with your API call
+    // addWarehouseItem(newItem)
+    //   .then((response) => {
+    //     // Handle success and navigate
+    //     this.props.history.push("/warehouse");
+    //   })
+    //   .catch((error) => {
+    //     // Handle error
+    //     console.error("Error adding item: ", error);
+    //   });
+
+    // For this example, we'll just log the newItem
+    console.log("New Item Data:", newItem);
+
+    // Optionally, you can navigate back to the warehouse list page
+    this.props.history.push("/warehouse");
   };
 
-  return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label>Name:</Form.Label>
-        <Form.Control
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-        />
-      </Form.Group>
-
-      <Form.Group>
-        <Form.Label>Quantity:</Form.Label>
-        <Form.Control
-          type="number"
-          name="quantity"
-          value={formData.quantity}
-          onChange={handleInputChange}
-          required
-        />
-      </Form.Group>
-
-      <Form.Group>
-        <Form.Label>Entry Time:</Form.Label>
-        <Form.Control
-          type="datetime-local"
-          name="entryTime"
-          value={formData.entryTime}
-          onChange={handleInputChange}
-          required
-        />
-      </Form.Group>
-
-      <Form.Group>
-        <Form.Check
-          type="checkbox"
-          label="Available"
-          name="available"
-          checked={formData.available}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
-
-      <Button type="submit">Add Item</Button>
-    </Form>
-  );
-};
-
-export default AddWarehouseItem;
+  render() {
+    return (
+      <div>
+        <h2>Add Warehouse Item</h2>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={this.state.formData.name}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Quantity:</label>
+            <input
+              type="number"
+              name="quantity"
+              value={this.state.formData.quantity}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Entry Time:</label>
+            <input
+              type="datetime-local"
+              name="entryTime"
+              value={this.state.formData.entryTime}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Available:</label>
+            <input
+              type="checkbox"
+              name="available"
+              checked={this.state.formData.available}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <button type="submit">Add Item</button>
+          <Link to="/warehouse">Back to Warehouse List</Link>
+        </form>
+      </div>
+    );
+  }
+}

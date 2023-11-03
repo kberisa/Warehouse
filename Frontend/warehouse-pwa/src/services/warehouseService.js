@@ -1,5 +1,4 @@
 import axios from 'axios';
-import http from '../http-common';
 
 const API_BASE_URL = 'http://kberisa-001-site1.ftempurl.com'; // API endpoint
 

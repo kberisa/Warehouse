@@ -1,15 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { updateWarehouseItem } from '../../services/warehouseService';
 
-const EditWarehouseItem = () => {
-  const navigate = useNavigate();
+export default function EditWarehouseItem() {
   const location = useLocation();
-  const item = location.state ? location.state.item : null;
+  const navigate = useNavigate();
 
-  console.log('item:', item); // Debugging output
+  const [item, setItem] = useState(null);
+  const [editedItem, setEditedItem] = useState({
+    name: '',
+    quantity: 0,
+    available: false,
+  });
+
+  useEffect(() => {
+    const item = location.state ? location.state.item : null;
+
+    setItem(item);
+    setEditedItem({ ...item });
+  }, [location.state]);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setEditedItem((prevEditedItem) => ({
+      ...prevEditedItem,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleUpdateItem = () => {
+    if (editedItem) {
+      updateWarehouseItem(editedItem.id, editedItem)
+        .then((response) => {
+          // Handle success and navigate
+          navigate(`/details/${editedItem.id}`);
+        })
+        .catch((error) => {
+          // Handle error
+          console.error('Error updating item:', error);
+        });
+    }
+  };
 
   if (!item) {
-    // Handle the case where 'item' is null or undefined
     return (
       <div>
         <h2>Edit Warehouse Item</h2>
@@ -19,28 +53,10 @@ const EditWarehouseItem = () => {
     );
   }
 
-  const [editedItem, setEditedItem] = useState(item);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setEditedItem((prevItem) => ({
-      ...prevItem,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Implement the code to update the item with the values from the 'editedItem'
-    // You can send a request to your backend to update the item using the editedItem data.
-    // After successfully updating the item, navigate back to the warehouse item details page
-    
-  };
-
   return (
     <div>
       <h2>Edit Warehouse Item</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div>
           <label>Name:</label>
           <input
@@ -68,11 +84,12 @@ const EditWarehouseItem = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit">Update Item</button>
+        {/* Add more input fields for other item properties here */}
+        <button type="button" onClick={handleUpdateItem}>
+          Update Item
+        </button>
         <Link to="/warehouse">Back to Warehouse List</Link>
       </form>
     </div>
   );
-};
-
-export default EditWarehouseItem;
+}
