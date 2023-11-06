@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BOUFz5vFYfou73UQkHsszSSwmWKTlfn6gCp8WQlinHs=",
+  "Hash": "lmUzcSS5g3gPT8yUPz8agLyDIeKG3opopPlUd75EB7E=",
   "Source": "Warehouse",
   "BasePath": "_content/Warehouse",
   "Mode": "Default",
@@ -255,12 +255,12 @@
       "OriginalItemSpec": "wwwroot\\static\\js\\787.18000d94.chunk.js.map"
     },
     {
-      "Identity": "D:\\GitHub\\Warehouse\\wwwroot\\static\\js\\main.544c7f1f.js",
+      "Identity": "D:\\GitHub\\Warehouse\\wwwroot\\static\\js\\main.7b36a67f.js",
       "SourceId": "Warehouse",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\GitHub\\Warehouse\\wwwroot\\",
       "BasePath": "_content/Warehouse",
-      "RelativePath": "static/js/main.544c7f1f.js",
+      "RelativePath": "static/js/main.7b36a67f.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -269,15 +269,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\static\\js\\main.544c7f1f.js"
+      "OriginalItemSpec": "wwwroot\\static\\js\\main.7b36a67f.js"
     },
     {
-      "Identity": "D:\\GitHub\\Warehouse\\wwwroot\\static\\js\\main.544c7f1f.js.LICENSE.txt",
+      "Identity": "D:\\GitHub\\Warehouse\\wwwroot\\static\\js\\main.7b36a67f.js.LICENSE.txt",
       "SourceId": "Warehouse",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\GitHub\\Warehouse\\wwwroot\\",
       "BasePath": "_content/Warehouse",
-      "RelativePath": "static/js/main.544c7f1f.js.LICENSE.txt",
+      "RelativePath": "static/js/main.7b36a67f.js.LICENSE.txt",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -286,15 +286,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\static\\js\\main.544c7f1f.js.LICENSE.txt"
+      "OriginalItemSpec": "wwwroot\\static\\js\\main.7b36a67f.js.LICENSE.txt"
     },
     {
-      "Identity": "D:\\GitHub\\Warehouse\\wwwroot\\static\\js\\main.544c7f1f.js.map",
+      "Identity": "D:\\GitHub\\Warehouse\\wwwroot\\static\\js\\main.7b36a67f.js.map",
       "SourceId": "Warehouse",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\GitHub\\Warehouse\\wwwroot\\",
       "BasePath": "_content/Warehouse",
-      "RelativePath": "static/js/main.544c7f1f.js.map",
+      "RelativePath": "static/js/main.7b36a67f.js.map",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -303,7 +303,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\static\\js\\main.544c7f1f.js.map"
+      "OriginalItemSpec": "wwwroot\\static\\js\\main.7b36a67f.js.map"
     },
     {
       "Identity": "D:\\GitHub\\Warehouse\\wwwroot\\static\\media\\logo.103b5fa18196d5665a7e12318285c916.svg",

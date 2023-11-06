@@ -1,113 +1,93 @@
 import React, { Component } from "react";
+import WarehouseService from "../../services/warehouseService"; // Import the WarehouseService
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 
-export default class AddWarehouseItem extends Component {
+export default class AddWarehouseItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      formData: {
-        name: "",
-        quantity: 0,
-        entryTime: "",
-        available: true,
-      },
-    };
+
+    this.addwarehouse = this.addwarehouse.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
+  async addWarehouse(item) {
+    const answer = await WarehouseService.add(item); // Use WarehouseService to add the item
+    if (answer.ok) {
+      window.location.href = "/warehouse/add";
+    } else {
+      console.log(answer);
+    }
+  }
 
-    this.setState((prevState) => ({
-      formData: {
-        ...prevState.formData,
-        [name]: newValue,
-      },
-    }));
-  };
-
-  handleSubmit = (e) => {
+  handleSubmit(e) {
     e.preventDefault();
 
-    const { name, quantity, entryTime, available } = this.state.formData;
-    // Construct the item object with form data
+    const datainfo = new FormData(e.target);
 
-    const newItem = {
-      name,
-      quantity,
-      entryTime,
-      available,
-    };
-
-    // Implement the logic to send the new item data to your backend
-    // You can use a service function for this or an API call.
-
-    // Example: Replace the following with your API call
-    // addWarehouseItem(newItem)
-    //   .then((response) => {
-    //     // Handle success and navigate
-    //     this.props.history.push("/warehouse");
-    //   })
-    //   .catch((error) => {
-    //     // Handle error
-    //     console.error("Error adding item: ", error);
-    //   });
-
-    // For this example, we'll just log the newItem
-    console.log("New Item Data:", newItem);
-
-    // Optionally, you can navigate back to the warehouse list page
-    this.props.history.push("/warehouse");
-  };
+    this.addWarehouseItem({
+      name: datainfo.get("name"),
+      quantity: parseFloat(datainfo.get("quantity")),
+      available: datainfo.get("available") === "true",
+    });
+  }
 
   render() {
     return (
-      <div>
-        <h2>Add Warehouse Item</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>Name:</label>
-            <input
+      <Container>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
               type="text"
               name="name"
-              value={this.state.formData.name}
-              onChange={this.handleInputChange}
+              placeholder="Item name"
+              maxLength={255}
               required
             />
-          </div>
-          <div>
-            <label>Quantity:</label>
-            <input
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="quantity">
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control
               type="number"
               name="quantity"
-              value={this.state.formData.quantity}
-              onChange={this.handleInputChange}
+              placeholder="Enter quantity"
               required
             />
-          </div>
-          <div>
-            <label>Entry Time:</label>
-            <input
-              type="datetime-local"
-              name="entryTime"
-              value={this.state.formData.entryTime}
-              onChange={this.handleInputChange}
-              required
-            />
-          </div>
-          <div>
-            <label>Available:</label>
-            <input
-              type="checkbox"
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="available">
+            <Form.Label>Available</Form.Label>
+            <Form.Control
+              as="select"
               name="available"
-              checked={this.state.formData.available}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <button type="submit">Add Item</button>
-          <Link to="/warehouse">Back to Warehouse List</Link>
-        </form>
-      </div>
+              defaultValue="true"
+              required
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </Form.Control>
+          </Form.Group>
+
+          <Row>
+            <Col>
+              <Link className="btn btn-danger gumb" to={`/warehouse`}>
+                Cancel
+              </Link>
+            </Col>
+            <Col>
+              <Button variant="primary" className="gumb" type="submit">
+                Add Item
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Container>
     );
   }
 }

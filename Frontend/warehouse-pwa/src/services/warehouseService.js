@@ -1,19 +1,53 @@
-import axios from 'axios';
+import http from '../http-common';
 
-const API_BASE_URL = 'http://kberisa-001-site1.ftempurl.com'; // API endpoint
 
-export const getWarehouseItem = () => {
-  return axios.get(`${API_BASE_URL}/items`);
-};
+class WarehouseService {
+  async getAll() {
+    return await http.get('/warehouse');
+  }
 
-export const addWarehouseItem = (item) => {
-  return axios.post(`${API_BASE_URL}/items`, item);
-};
+  async getById(id) {
+    return await http.get('/warehouse/' + id);
+  }
 
-export const updateWarehouseItem = (id, item) => {
-  return axios.put(`${API_BASE_URL}/items/${id}`, item);
-};
+  async delete(id) {
+    const answer = await http.delete('/warehouse/' + id)
+      .then(response => {
+        return { ok: true, message: 'Successfully deleted' };
+      })
+      .catch(e => {
+        return { ok: false, message: e.response.data };
+      });
 
-export const deleteWarehouseItem = (id) => {
-  return axios.delete(`${API_BASE_URL}/items/${id}`);
-};
+    return answer;
+  }
+
+  async post(item) {
+    const answer = await http.post('/warehouse', item)
+      .then(response => {
+        return { ok: true, message: 'Item added' };
+      })
+      .catch(error => {
+        console.log(error.response);
+        return { ok: false, message: error.response.data };
+      });
+
+    return answer;
+  }
+
+  async put(id, item) {
+    const answer = await http.put('/warehouse/' + id, item)
+      .then(response => {
+        return { ok: true, message: 'Item changed' };
+      })
+      .catch(error => {
+        console.error(error.response);
+        return { ok: false, message: error.response.data };
+      });
+
+    return answer;
+  }
+}
+
+const warehouseService = new WarehouseService();
+export default warehouseService;

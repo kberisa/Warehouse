@@ -1,95 +1,126 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { updateWarehouseItem } from '../../services/warehouseService';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import WarehouseService from '../../services/warehouseService';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
-export default function EditWarehouseItem() {
-  const location = useLocation();
-  const navigate = useNavigate();
+export default class EditWarehouseItem extends Component {
+  constructor(props) {
+    super(props);
 
-  const [item, setItem] = useState(null);
-  const [editedItem, setEditedItem] = useState({
-    name: '',
-    quantity: 0,
-    available: false,
-  });
+    this.state = {
+      item: null,
+      editedItem: {
+        name: '',
+        quantity: 0,
+        available: false,
+      },
+    };
+  }
 
-  useEffect(() => {
+  componentDidMount() {
+    this.handleUpdateState();
+  }
+
+  handleUpdateState() {
+    const { location } = this.props;
     const item = location.state ? location.state.item : null;
+    this.setState({
+      item,
+      editedItem: { ...item },
+    });
+  }
 
-    setItem(item);
-    setEditedItem({ ...item });
-  }, [location.state]);
-
-  const handleChange = (e) => {
+  handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    setEditedItem((prevEditedItem) => ({
-      ...prevEditedItem,
-      [name]: type === 'checkbox' ? checked : value,
+    this.setState((prevState) => ({
+      editedItem: {
+        ...prevState.editedItem,
+        [name]: type === 'checkbox' ? checked : value,
+      },
     }));
   };
 
-  const handleUpdateItem = () => {
+  handleUpdateItem = () => {
+    const { editedItem } = this.state;
     if (editedItem) {
-      updateWarehouseItem(editedItem.id, editedItem)
+      WarehouseService.update(editedItem.id, editedItem)
         .then((response) => {
           // Handle success and navigate
-          navigate(`/details/${editedItem.id}`);
+          // You can use the history object to navigate
+          this.props.history.push(`/details/${editedItem.id}`);
         })
         .catch((error) => {
           // Handle error
           console.error('Error updating item:', error);
         });
     }
-  };
-
-  if (!item) {
-    return (
-      <div>
-        <h2>Edit Warehouse Item</h2>
-        <p>Item not found or missing.</p>
-        <Link to="/warehouse">Back to Warehouse List</Link>
-      </div>
-    );
   }
 
-  return (
-    <div>
-      <h2>Edit Warehouse Item</h2>
-      <form>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={editedItem.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Quantity:</label>
-          <input
-            type="number"
-            name="quantity"
-            value={editedItem.quantity}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Available:</label>
-          <input
-            type="checkbox"
-            name="available"
-            checked={editedItem.available}
-            onChange={handleChange}
-          />
-        </div>
-        {/* Add more input fields for other item properties here */}
-        <button type="button" onClick={handleUpdateItem}>
-          Update Item
-        </button>
-        <Link to="/warehouse">Back to Warehouse List</Link>
-      </form>
-    </div>
-  );
+  render() {
+    const { item, editedItem } = this.state;
+
+    if (!item) {
+      return (
+        <Container>
+          <h2>Edit Warehouse Item</h2>
+          <p>Item not found or missing.</p>
+          <Link to="/warehouse" className="btn btn-danger gumb">
+            Back to Warehouse List
+          </Link>
+        </Container>
+      );
+    }
+
+    return (
+      <Container>
+        <h2>Edit Warehouse Item</h2>
+        <Form onSubmit={this.handleUpdateItem}>
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>Name:</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={editedItem.name}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="quantity">
+            <Form.Label>Quantity:</Form.Label>
+            <Form.Control
+              type="number"
+              name="quantity"
+              value={editedItem.quantity}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="available">
+            <Form.Check
+              type="checkbox"
+              name="available"
+              label="Available"
+              checked={editedItem.available}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Row>
+            <Col>
+              <Link to="/warehouse" className="btn btn-danger gumb">
+                Cancel
+              </Link>
+            </Col>
+            <Col>
+              <Button type="submit" variant="primary" className="gumb">
+                Update Item
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Container>
+    );
+  }
 }
